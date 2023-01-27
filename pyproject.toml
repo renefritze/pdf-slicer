@@ -31,8 +31,10 @@ classifiers = [
 dynamic = ["version"]
 dependencies = [
   "typing_extensions >=3.7; python_version<'3.8'",
-  "PySimpleGUI==4.60.4",
-  "PyMuPDF==1.21.1"
+  "qtpy>2.2",
+  "pyside6",
+  "PyMuPDF==1.21.1",
+  "pillow",
 ]
 
 [project.optional-dependencies]
