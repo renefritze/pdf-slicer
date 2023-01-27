@@ -3,6 +3,8 @@ from pathlib import Path
 
 import fitz
 from PIL import Image, ImageQt
+from qtpy.QtPdf import QPdfDocument, QPdfBookmarkModel
+from qtpy.QtPdfWidgets import QPdfView
 from qtpy.QtWidgets import QApplication
 from qtpy.QtCore import Qt
 from qtpy.QtGui import QImage, QPixmap, QPalette, QPainter
@@ -24,18 +26,9 @@ class QImageViewer(QMainWindow):
         super().__init__()
         self.scaleFactor = 0.0
 
-        self.imageLabel = QLabel()
-        self.imageLabel.setBackgroundRole(QPalette.Base)
-        self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.imageLabel.setScaledContents(True)
-
-        self.scrollArea = QScrollArea()
-        self.scrollArea.setBackgroundRole(QPalette.Dark)
-        self.scrollArea.setWidget(self.imageLabel)
-        self.scrollArea.setVisible(False)
-
-        self.setCentralWidget(self.scrollArea)
-
+        self.document = QPdfDocument(self)
+        # bookmark_model = QPdfBookmarkModel(self)
+        # bookmark_model.setDocument(self.document)
         self.createActions()
         self.createMenus()
 
@@ -54,28 +47,28 @@ class QImageViewer(QMainWindow):
             self.preload_images(fileName)
 
     def preload_images(self, file_path):
-        pdf_document = fitz.open(file_path)
+
+        self.pdf_doc = QPdfDocument()
+        self.pdf_doc.load(file_path)
+        # self.pdf_doc.setPageSize(QPrinter.A4)
+        # self.pdf_doc.setPageOrientation(QPrinter.Portrait)
+        # self.pdf_doc.render(0, (self.pdf_doc.pageSize().width(), self.pdf_doc.pageSize().height()))
 
         self.images_clips = []
+        self.view = QPdfView()
+        self.view.setDocument(self.pdf_doc)
+        self.view.setPageMode(QPdfView.SinglePage)
+        # self.view.setPageLayout(QPdfView.OneColumn)
+        # self.view.setPageNavigation(QPdfView.ScrollBarNavigation)
+        self.view.show()
+        self.setCentralWidget(self.view)
 
-        for page in pdf_document:
-            pix = page.get_pixmap()
-            fmt = QImage.Format_RGBA8888 if pix.alpha else QImage.Format_RGB888
-            qtimg = QImage(pix.samples_ptr, pix.width, pix.height, fmt)
-            qtimg.save(f"test_{str(pix)}.png")
-            self.images_clips.append(qtimg)
-
-        self.imageLabel.setPixmap(QPixmap.fromImage(self.images_clips[0]))
         self.setWindowTitle("Image Viewer : " + file_path)
         self.scaleFactor = 1.0
 
-        self.scrollArea.setVisible(True)
         self.fitToWidthAct.setEnabled(True)
         self.fitToWindowAct.setEnabled(True)
         self.updateActions()
-
-        if not self.fitToWindowAct.isChecked():
-            self.imageLabel.adjustSize()
 
     def zoomIn(self):
         self.scaleImage(1.25)
