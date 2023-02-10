@@ -1,8 +1,11 @@
 import sys
 from pathlib import Path
+from pprint import pprint
 
 import fitz
 from PIL import Image, ImageQt
+from PySide6.QtCore import QPoint, Slot
+from PySide6.QtGui import QShortcut, QKeySequence
 from qtpy.QtPdf import QPdfDocument, QPdfBookmarkModel
 from qtpy.QtPdfWidgets import QPdfView
 from qtpy.QtWidgets import QApplication
@@ -21,14 +24,12 @@ from qtpy.QtWidgets import (
 )
 
 
-class QImageViewer(QMainWindow):
+class QPdfViewerMainwindow(QMainWindow):
     def __init__(self, pdf_filename=None):
         super().__init__()
         self.scaleFactor = 0.0
 
         self.document = QPdfDocument(self)
-        # bookmark_model = QPdfBookmarkModel(self)
-        # bookmark_model.setDocument(self.document)
         self.createActions()
         self.createMenus()
 
@@ -48,18 +49,14 @@ class QImageViewer(QMainWindow):
 
     def preload_images(self, file_path):
 
+        self.cut_points = []
         self.pdf_doc = QPdfDocument()
         self.pdf_doc.load(file_path)
-        # self.pdf_doc.setPageSize(QPrinter.A4)
-        # self.pdf_doc.setPageOrientation(QPrinter.Portrait)
-        # self.pdf_doc.render(0, (self.pdf_doc.pageSize().width(), self.pdf_doc.pageSize().height()))
 
         self.images_clips = []
         self.view = QPdfView()
         self.view.setDocument(self.pdf_doc)
         self.view.setPageMode(QPdfView.SinglePage)
-        # self.view.setPageLayout(QPdfView.OneColumn)
-        # self.view.setPageNavigation(QPdfView.ScrollBarNavigation)
         self.view.show()
         self.setCentralWidget(self.view)
 
@@ -77,7 +74,6 @@ class QImageViewer(QMainWindow):
         self.scaleImage(0.8)
 
     def normalSize(self):
-        self.imageLabel.adjustSize()
         self.scaleFactor = 1.0
         self.scaleImage(1.0)
 
@@ -95,11 +91,26 @@ class QImageViewer(QMainWindow):
 
     def fitToWindow(self):
         fitToWindow = self.fitToWindowAct.isChecked()
-        self.scrollArea.setWidgetResizable(fitToWindow)
         if not fitToWindow:
             self.normalSize()
-
         self.updateActions()
+
+    def cut(self):
+        self.cut_points.append(self.view.pageNavigator().currentPage())
+        print("cut points")
+        pprint(self.cut_points)
+
+    def previous(self):
+        nav = self.view.pageNavigator()
+        if nav.currentPage() > 0:
+            nav.jump(nav.currentPage() - 1, QPoint(), nav.currentZoom())
+        self.view.update()
+
+    def next(self):
+        nav = self.view.pageNavigator()
+        if nav.currentPage() < self.pdf_doc.pageCount() - 1:
+            nav.jump(nav.currentPage() + 1, QPoint(), nav.currentZoom())
+            self.view.update()
 
     def createActions(self):
         self.openAct = QAction("&Open...", self, shortcut="Ctrl+O", triggered=self.open)
@@ -140,6 +151,8 @@ class QImageViewer(QMainWindow):
             shortcut="Ctrl+F",
             triggered=self.fitToWindow,
         )
+        self.cutAct = QShortcut(QKeySequence("x"), self, self.cut)
+        self.nextAct = QShortcut(QKeySequence.fromString(" "), self, self.next)
 
     def createMenus(self):
         self.fileMenu = QMenu("&File", self)
@@ -166,10 +179,8 @@ class QImageViewer(QMainWindow):
 
     def scaleImage(self, factor):
         self.scaleFactor *= factor
-        self.imageLabel.resize(self.scaleFactor * self.imageLabel.pixmap().size())
-
-        self.adjustScrollBar(self.scrollArea.horizontalScrollBar(), factor)
-        self.adjustScrollBar(self.scrollArea.verticalScrollBar(), factor)
+        # self.imageLabel.resize(self.scaleFactor * self.imageLabel.pixmap().size())
+        self.view.setZoomFactor(self.scaleFactor)
 
         self.zoomInAct.setEnabled(self.scaleFactor < 3.0)
         self.zoomOutAct.setEnabled(self.scaleFactor > 0.333)
@@ -186,6 +197,6 @@ if __name__ == "__main__":
         pdf_filename = sys.argv[1]
     except IndexError:
         pdf_filename = None
-    imageViewer = QImageViewer(pdf_filename)
+    imageViewer = QPdfViewerMainwindow(pdf_filename)
     imageViewer.show()
     sys.exit(app.exec_())
