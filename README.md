@@ -1,12 +1,12 @@
 # pdf-cutter
 
 [![Actions Status][actions-badge]][actions-link]
-[![Documentation Status][rtd-badge]][rtd-link]
 
 [![PyPI version][pypi-version]][pypi-link]
 [![PyPI platforms][pypi-platforms]][pypi-link]
 
-[![GitHub Discussion][github-discussions-badge]][github-discussions-link]
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/renefritze/pdf-cutter/main.svg)](https://results.pre-commit.ci/latest/github/renefritze/pdf-cutter/main)
+
 
 <!-- prettier-ignore-start -->
 [actions-badge]:            https://github.com/renefritze/pdf-cutter/workflows/CI/badge.svg
