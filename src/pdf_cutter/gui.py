@@ -1,22 +1,12 @@
 import sys
-from pathlib import Path
 from pprint import pprint
 
-import fitz
-from PIL import Image, ImageQt
-from PySide6.QtCore import QPoint, Slot
+from PySide6.QtCore import QPoint
 from PySide6.QtGui import QShortcut, QKeySequence
-from qtpy.QtPdf import QPdfDocument, QPdfBookmarkModel
+from qtpy.QtPdf import QPdfDocument
 from qtpy.QtPdfWidgets import QPdfView
 from qtpy.QtWidgets import QApplication
-from qtpy.QtCore import Qt
-from qtpy.QtGui import QImage, QPixmap, QPalette, QPainter
-from qtpy.QtPrintSupport import QPrintDialog, QPrinter
 from qtpy.QtWidgets import (
-    QLabel,
-    QSizePolicy,
-    QScrollArea,
-    QMessageBox,
     QMainWindow,
     QMenu,
     QAction,
