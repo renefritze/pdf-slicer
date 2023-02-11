@@ -14,7 +14,7 @@ from qtpy.QtWidgets import (
     QFileDialog,
 )
 
-from pdf_cutter.splitter import split
+from pdf_slicer.splitter import split
 
 
 class QPdfViewerMainwindow(QMainWindow):
