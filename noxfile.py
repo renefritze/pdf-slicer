@@ -45,7 +45,7 @@ def coverage(session: nox.Session) -> None:
     Run tests and compute coverage.
     """
 
-    session.posargs.append("--cov=pdf-cutter")
+    session.posargs.append("--cov=pdf-slicer")
     tests(session)
 
 

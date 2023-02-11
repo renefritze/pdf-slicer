@@ -31,7 +31,6 @@ classifiers = [
 dynamic = ["version"]
 dependencies = [
   "typing_extensions >=3.7; python_version<'3.8'",
-  "qtpy>2.2",
   "pyside6",
   "PyMuPDF==1.21.1",
   "pillow",
@@ -54,10 +53,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/renefritze/pdf-cutter"
-"Bug Tracker" = "https://github.com/renefritze/pdf-cutter/issues"
-Discussions = "https://github.com/renefritze/pdf-cutter/discussions"
-Changelog = "https://github.com/renefritze/pdf-cutter/releases"
+Homepage = "https://github.com/renefritze/pdf-slicer"
+"Bug Tracker" = "https://github.com/renefritze/pdf-slicer/issues"
+Discussions = "https://github.com/renefritze/pdf-slicer/discussions"
+Changelog = "https://github.com/renefritze/pdf-slicer/releases"
 [tool.hatch]
 version.path = "src/pdf_cutter/__init__.py"
 envs.default.dependencies = [

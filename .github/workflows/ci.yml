@@ -42,7 +42,7 @@ jobs:
         run: python -m pip install .[test]
 
       - name: Test package
-        run: python -m pytest -ra --cov=pdf-cutter
+        run: python -m pytest -ra --cov=pdf-slicer
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v3.1.1
