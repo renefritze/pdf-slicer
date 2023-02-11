@@ -3,6 +3,7 @@ from pprint import pprint
 
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QShortcut, QKeySequence
+from PySide6.QtWidgets import QMessageBox
 from qtpy.QtPdf import QPdfDocument
 from qtpy.QtPdfWidgets import QPdfView
 from qtpy.QtWidgets import QApplication
@@ -12,6 +13,8 @@ from qtpy.QtWidgets import (
     QAction,
     QFileDialog,
 )
+
+from pdf_cutter.splitter import split
 
 
 class QPdfViewerMainwindow(QMainWindow):
@@ -39,9 +42,10 @@ class QPdfViewerMainwindow(QMainWindow):
 
     def preload_images(self, file_path):
 
-        self.cut_points = []
+        self.cut_points = set()
         self.pdf_doc = QPdfDocument()
         self.pdf_doc.load(file_path)
+        self.file_path = file_path
 
         self.images_clips = []
         self.view = QPdfView()
@@ -86,21 +90,36 @@ class QPdfViewerMainwindow(QMainWindow):
         self.updateActions()
 
     def cut(self):
-        self.cut_points.append(self.view.pageNavigator().currentPage())
-        print("cut points")
-        pprint(self.cut_points)
+        if self.view.pageNavigator().currentPage() > 0:
+            self.cut_points.add(self.view.pageNavigator().currentPage() - 1)
+            print("cut points")
+            pprint(self.cut_points)
 
     def previous(self):
         nav = self.view.pageNavigator()
         if nav.currentPage() > 0:
             nav.jump(nav.currentPage() - 1, QPoint(), nav.currentZoom())
-        self.view.update()
+            self.view.update()
 
     def next(self):
         nav = self.view.pageNavigator()
         if nav.currentPage() < self.pdf_doc.pageCount() - 1:
             nav.jump(nav.currentPage() + 1, QPoint(), nav.currentZoom())
             self.view.update()
+
+    def process(self):
+        text = f"Split into {len(self.cut_points)} files?"
+        reply = QMessageBox.question(
+            self,
+            "Process file",
+            text,
+            buttons=QMessageBox.StandardButtons(
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            ),
+            defaultButton=QMessageBox.StandardButton.Yes,
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            split(self.file_path, self.cut_points)
 
     def createActions(self):
         self.openAct = QAction("&Open...", self, shortcut="Ctrl+O", triggered=self.open)
@@ -143,6 +162,8 @@ class QPdfViewerMainwindow(QMainWindow):
         )
         self.cutAct = QShortcut(QKeySequence("x"), self, self.cut)
         self.nextAct = QShortcut(QKeySequence.fromString(" "), self, self.next)
+        self.prevAct = QShortcut(QKeySequence("b"), self, self.previous)
+        self.processAct = QShortcut(QKeySequence("p"), self, self.process)
 
     def createMenus(self):
         self.fileMenu = QMenu("&File", self)
