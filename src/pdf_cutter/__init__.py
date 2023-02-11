@@ -1,7 +1,7 @@
 """
 Copyright (c) 2023 René Fritze. All rights reserved.
 
-pdf-cutter: GUI for easy PDF splitting
+pdf-slicer: GUI for easy PDF splitting
 """
 
 

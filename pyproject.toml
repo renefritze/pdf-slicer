@@ -53,10 +53,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/renefritze/pdf-cutter"
-"Bug Tracker" = "https://github.com/renefritze/pdf-cutter/issues"
-Discussions = "https://github.com/renefritze/pdf-cutter/discussions"
-Changelog = "https://github.com/renefritze/pdf-cutter/releases"
+Homepage = "https://github.com/renefritze/pdf-slicer"
+"Bug Tracker" = "https://github.com/renefritze/pdf-slicer/issues"
+Discussions = "https://github.com/renefritze/pdf-slicer/discussions"
+Changelog = "https://github.com/renefritze/pdf-slicer/releases"
 [tool.hatch]
 version.path = "src/pdf_cutter/__init__.py"
 envs.default.dependencies = [

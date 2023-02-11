@@ -11,7 +11,7 @@ from __future__ import annotations
 
 # -- Project information -----------------------------------------------------
 
-project = "pdf-cutter"
+project = "pdf-slicer"
 copyright = "2023, René Fritze"
 author = "René Fritze"
 
@@ -51,7 +51,7 @@ html_baseurl = "https://pdf_cutter.readthedocs.io/en/latest/"
 
 html_theme_options = {
     "home_page_in_toc": True,
-    "repository_url": "https://github.com/renefritze/pdf-cutter",
+    "repository_url": "https://github.com/renefritze/pdf-slicer",
     "use_repository_button": True,
     "use_issues_button": True,
     "use_edit_page_button": True,
