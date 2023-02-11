@@ -47,7 +47,7 @@ html_theme = "sphinx_book_theme"
 
 html_title = f"{project}"
 
-html_baseurl = "https://pdf_cutter.readthedocs.io/en/latest/"
+html_baseurl = "https://pdf_slicer.readthedocs.io/en/latest/"
 
 html_theme_options = {
     "home_page_in_toc": True,

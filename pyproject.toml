@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 
 [project]
-name = "pdf_cutter"
+name = "pdf_slicer"
 authors = [
   { name = "René Fritze", email = "github@fritze.me" },
 ]
@@ -58,7 +58,7 @@ Homepage = "https://github.com/renefritze/pdf-slicer"
 Discussions = "https://github.com/renefritze/pdf-slicer/discussions"
 Changelog = "https://github.com/renefritze/pdf-slicer/releases"
 [tool.hatch]
-version.path = "src/pdf_cutter/__init__.py"
+version.path = "src/pdf_slicer/__init__.py"
 envs.default.dependencies = [
   "pytest",
   "pytest-cov",
@@ -92,7 +92,7 @@ profile = "black"
 
 [tool.pylint]
 py-version = "3.7"
-ignore-paths= ["src/pdf_cutter/_version.py"]
+ignore-paths= ["src/pdf_slicer/_version.py"]
 reports.output-format = "colorized"
 similarities.ignore-imports = "yes"
 messages_control.disable = [
