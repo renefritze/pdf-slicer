@@ -20,3 +20,13 @@
 [rtd-link]:                 https://pdf-cutter.readthedocs.io/en/latest/?badge=latest
 
 <!-- prettier-ignore-end -->
+
+## Usage
+
+### Keys
+
+| Key | Action |
+| --- | --- |
+| `x` | Quit cut before this page |
+| `p` | process cut list and save pdfs |
+| `Space` | Next page |
