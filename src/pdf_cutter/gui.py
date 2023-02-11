@@ -106,6 +106,8 @@ class QPdfViewerMainwindow(QMainWindow):
         if nav.currentPage() < self.pdf_doc.pageCount() - 1:
             nav.jump(nav.currentPage() + 1, QPoint(), nav.currentZoom())
             self.view.update()
+        else:
+            self.process()
 
     def process(self):
         text = f"Split into {len(self.cut_points)} files?"
