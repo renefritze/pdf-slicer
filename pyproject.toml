@@ -8,11 +8,11 @@ name = "pdf_slicer"
 authors = [
   { name = "René Fritze", email = "github@fritze.me" },
 ]
-description = "GUI for easy PDF splitting"
+description = "GUI for easy PDF slicing"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
-  "Development Status :: 1 - Planning",
+  "Development Status :: 3 - Alpha",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: BSD License",
@@ -52,10 +52,13 @@ docs = [
   "sphinx_copybutton",
 ]
 
+[project.gui-scripts]
+pdf-slicer = "pdf_slicer.gui:main"
+
+
 [project.urls]
 Homepage = "https://github.com/renefritze/pdf-slicer"
 "Bug Tracker" = "https://github.com/renefritze/pdf-slicer/issues"
-Discussions = "https://github.com/renefritze/pdf-slicer/discussions"
 Changelog = "https://github.com/renefritze/pdf-slicer/releases"
 [tool.hatch]
 version.path = "src/pdf_slicer/__init__.py"

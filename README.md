@@ -23,10 +23,23 @@
 
 ## Usage
 
+```bash
+pdf-slicer <pdf-file>
+```
+
+## Installation
+
+
+```bash
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+python3 -m pipx install pdf-slicer
+```
+
 ### Keys
 
-| Key | Action |
-| --- | --- |
-| `x` | Quit cut before this page |
-| `p` | process cut list and save pdfs |
-| `Space` | Next page |
+| Key | Action                           |
+| --- |----------------------------------|
+| `x` | Slice before this page           |
+| `p` | process slice list and save pdfs |
+| `Space` | Next page                        |
