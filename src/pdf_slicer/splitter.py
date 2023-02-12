@@ -1,9 +1,10 @@
 from pathlib import Path
+from typing import Union, Optional
 
 import fitz
 
 
-def split(pdf_file, cut_points):
+def split(pdf_file: Union[str, Path], cut_points: list[int]) -> list[Path]:
     """Split a PDF file into multiple files.
 
     :param pdf_file: The PDF file to split.
@@ -13,13 +14,15 @@ def split(pdf_file, cut_points):
     pdf_file = Path(pdf_file)
     # Create a new PDF file for each page number in the list.
     last_cut = 0
+    outs = []
     for page in cut_points:
-        _save(last_cut, pdf_file, page)
+        outs.append(_save(last_cut, pdf_file, page))
         last_cut = page + 1
-    _save(last_cut, pdf_file)
+    outs.append(_save(last_cut, pdf_file))
+    return outs
 
 
-def _save(last_cut, pdf_file, page=None):
+def _save(last_cut: int, pdf_file: Path, page: Optional[int] = None) -> Path:
     doc = fitz.open(pdf_file)
     if page is None:
         page = doc.page_count - 1
@@ -31,3 +34,4 @@ def _save(last_cut, pdf_file, page=None):
     output_file = pdf_file.with_name(f"{pdf_file.stem}_{page}.pdf")
     doc.save(output_file)
     doc.close()
+    return output_file

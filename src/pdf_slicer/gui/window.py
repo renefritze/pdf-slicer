@@ -212,8 +212,8 @@ def run(args):
         pdf_filename = None
     imageViewer = QPdfViewerMainwindow(pdf_filename)
     imageViewer.show()
-    sys.exit(app.exec_())
+    return app.exec_()
 
 
 if __name__ == "__main__":
-    run(sys.argv)
+    sys.exit(run(sys.argv))

@@ -4,4 +4,5 @@ from pdf_slicer.gui.window import run
 
 
 def main():
-    run(sys.argv)
+    """Entry point for the application script."""
+    return run(sys.argv)
