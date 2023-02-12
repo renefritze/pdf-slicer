@@ -41,8 +41,14 @@ jobs:
       - name: Install package
         run: python -m pip install .[test]
 
+      - name: linux deps
+        if: matrix.runs-on == 'ubuntu-latest'
+        run: sudo apt-get install -y libegl-mesa0 libegl1-mesa libgl1-mesa-glx libglu1-mesa libosmesa6
+      - name: macos deps
+        if: matrix.runs-on == 'macos-latest'
+        run: brew install poppler
       - name: Test package
-        run: python -m pytest -ra --cov=pdf-slicer
+        run: python -m pytest -ra --cov=pdf_slicer
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v3.1.1
