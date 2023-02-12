@@ -204,12 +204,16 @@ class QPdfViewerMainwindow(QMainWindow):
         )
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
+def run(args):
+    app = QApplication(args)
     try:
-        pdf_filename = sys.argv[1]
+        pdf_filename = args[1]
     except IndexError:
         pdf_filename = None
     imageViewer = QPdfViewerMainwindow(pdf_filename)
     imageViewer.show()
     sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    run(sys.argv)
