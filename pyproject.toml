@@ -40,6 +40,8 @@ dependencies = [
 test = [
   "pytest >=6",
   "pytest-cov >=3",
+  "pytest-regressions >=2",
+  "pytest-qt >=4",
 ]
 dev = [
   "pytest >=6",
