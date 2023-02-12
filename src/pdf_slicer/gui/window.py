@@ -1,5 +1,4 @@
 import sys
-from pprint import pprint
 
 from PySide6.QtCore import QPoint
 from PySide6.QtGui import QShortcut, QKeySequence
@@ -41,10 +40,17 @@ class QPdfViewerMainwindow(QMainWindow):
             self.preload_images(fileName)
 
     def preload_images(self, file_path):
-
+        pdf_doc = QPdfDocument()
+        pdf_doc.load(file_path)
+        if pdf_doc.status() != QPdfDocument.Ready:
+            QMessageBox.warning(
+                self,
+                "Error",
+                f"Could not load PDF file: {self.pdf_doc.error()}",
+            )
+            return
+        self.pdf_doc = pdf_doc
         self.cut_points = set()
-        self.pdf_doc = QPdfDocument()
-        self.pdf_doc.load(file_path)
         self.file_path = file_path
 
         self.images_clips = []
@@ -92,8 +98,6 @@ class QPdfViewerMainwindow(QMainWindow):
     def cut(self):
         if self.view.pageNavigator().currentPage() > 0:
             self.cut_points.add(self.view.pageNavigator().currentPage() - 1)
-            print("cut points")
-            pprint(self.cut_points)
 
     def previous(self):
         nav = self.view.pageNavigator()
@@ -120,8 +124,22 @@ class QPdfViewerMainwindow(QMainWindow):
             ),
             defaultButton=QMessageBox.StandardButton.Yes,
         )
+        if reply != QMessageBox.StandardButton.Yes:
+            return
+
+        files = split(self.file_path, self.cut_points)
+        text = f"Saved files:\n{' '.join((str(f) for f in files))}'\nClose window?"
+        reply = QMessageBox.question(
+            self,
+            "Done",
+            text,
+            buttons=QMessageBox.StandardButtons(
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            ),
+            defaultButton=QMessageBox.StandardButton.Yes,
+        )
         if reply == QMessageBox.StandardButton.Yes:
-            split(self.file_path, self.cut_points)
+            self.close()
 
     def createActions(self):
         self.openAct = QAction("&Open...", self, shortcut="Ctrl+O", triggered=self.open)

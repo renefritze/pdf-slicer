@@ -19,15 +19,17 @@ def split(pdf_file: Union[str, Path], cut_points: list[int]) -> list[Path]:
         outs.append(_save(last_cut, pdf_file, page))
         last_cut = page + 1
     outs.append(_save(last_cut, pdf_file))
-    return outs
+    return [out for out in outs if out is not None]
 
 
-def _save(last_cut: int, pdf_file: Path, page: Optional[int] = None) -> Path:
+def _save(
+    last_cut: int, pdf_file: Path, page: Optional[int] = None
+) -> Union[Path, None]:
     doc = fitz.open(pdf_file)
     if page is None:
         page = doc.page_count - 1
     if page > doc.page_count - 1:
-        return
+        return None
     # Open the PDF file to split.
     pages = list(range(last_cut, page + 1))
     doc.select(pages)
