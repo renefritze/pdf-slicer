@@ -43,10 +43,13 @@ jobs:
 
       - name: linux deps
         if: matrix.runs-on == 'ubuntu-latest'
-        run: sudo apt-get install -y libegl-mesa0 libegl1-mesa libgl1-mesa-glx libglu1-mesa libosmesa6
+        run: sudo apt-get install -y libegl-mesa0 libegl1-mesa libgl1-mesa-glx libglu1-mesa libosmesa6 poppler-utils
       - name: macos deps
         if: matrix.runs-on == 'macos-latest'
         run: brew install poppler
+      - name: windows deps
+        if: matrix.runs-on == 'windows-latest'
+        run: choco install poppler
       - name: Test package
         run: python -m pytest -ra --cov=pdf_slicer
 
