@@ -10,7 +10,7 @@ authors = [
 ]
 description = "GUI for easy PDF slicing"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
@@ -28,7 +28,7 @@ classifiers = [
 ]
 dynamic = ["version"]
 dependencies = [
-  "typing_extensions >=3.7; python_version<'3.8'",
+  "typing_extensions >=3.9; python_version<'3.8'",
   "pyside6",
   "PyMuPDF==1.21.1",
   "typer",
@@ -85,7 +85,7 @@ testpaths = [
 
 [tool.mypy]
 files = "src"
-python_version = "3.7"
+python_version = "3.9"
 warn_unused_configs = true
 strict = true
 show_error_codes = true
@@ -98,7 +98,7 @@ profile = "black"
 
 
 [tool.pylint]
-py-version = "3.7"
+py-version = "3.9"
 ignore-paths= ["src/pdf_slicer/_version.py"]
 reports.output-format = "colorized"
 similarities.ignore-imports = "yes"
