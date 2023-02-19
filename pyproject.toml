@@ -12,7 +12,7 @@ description = "GUI for easy PDF slicing"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: BSD License",
@@ -20,8 +20,6 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -33,13 +31,17 @@ dependencies = [
   "typing_extensions >=3.7; python_version<'3.8'",
   "pyside6",
   "PyMuPDF==1.21.1",
-  "pillow",
+  "typer",
+  "qtpy",
 ]
 
 [project.optional-dependencies]
 test = [
   "pytest >=6",
   "pytest-cov >=3",
+  "pytest-regressions >=2",
+  "pytest-qt >=4",
+  "diff-pdf-visually==1.7.0",
 ]
 dev = [
   "pytest >=6",
@@ -53,8 +55,10 @@ docs = [
 ]
 
 [project.gui-scripts]
-pdf-slicer = "pdf_slicer.gui:main"
+pdf-slicer-gui = "pdf_slicer.gui:main"
 
+[project.scripts]
+pdf-slicer = "pdf_slicer.splitter:main"
 
 [project.urls]
 Homepage = "https://github.com/renefritze/pdf-slicer"

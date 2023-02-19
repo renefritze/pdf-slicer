@@ -1,8 +1,10 @@
-import sys
+from pathlib import Path
+from typing import Optional
 
-from PySide6.QtCore import QPoint
-from PySide6.QtGui import QShortcut, QKeySequence
-from PySide6.QtWidgets import QMessageBox
+import typer
+from qtpy.QtCore import QPoint
+from qtpy.QtGui import QShortcut, QKeySequence
+from qtpy.QtWidgets import QMessageBox
 from qtpy.QtPdf import QPdfDocument
 from qtpy.QtPdfWidgets import QPdfView
 from qtpy.QtWidgets import QApplication
@@ -222,16 +224,12 @@ class QPdfViewerMainwindow(QMainWindow):
         )
 
 
-def run(args):
-    app = QApplication(args)
-    try:
-        pdf_filename = args[1]
-    except IndexError:
-        pdf_filename = None
-    imageViewer = QPdfViewerMainwindow(pdf_filename)
+def run(file_path: Optional[Path] = None):
+    app = QApplication()
+    imageViewer = QPdfViewerMainwindow(file_path)
     imageViewer.show()
     return app.exec_()
 
 
 if __name__ == "__main__":
-    sys.exit(run(sys.argv))
+    typer.run(run)

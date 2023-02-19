@@ -2,16 +2,15 @@ from pathlib import Path
 from typing import Union, Optional
 
 import fitz
+import typer as typer
 
 
-def split(pdf_file: Union[str, Path], cut_points: list[int]) -> list[Path]:
+def split(pdf_file: Path, cut_points: list[int]) -> list[Path]:
     """Split a PDF file into multiple files.
 
     :param pdf_file: The PDF file to split.
     :param pages: A list of page numbers to split the PDF file on.
     """
-
-    pdf_file = Path(pdf_file)
     # Create a new PDF file for each page number in the list.
     last_cut = 0
     outs = []
@@ -37,3 +36,12 @@ def _save(
     doc.save(output_file)
     doc.close()
     return output_file
+
+
+def main():
+    """Entry point for the application script."""
+    return typer.run(split)
+
+
+if __name__ == "__main__":
+    typer.run(split)

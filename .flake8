@@ -3,4 +3,3 @@ extend-ignore = E203, E501, E722
 extend-select = B902, B903, B904
 per-file-ignores =
     tests/*: T
-    noxfile.py: T
