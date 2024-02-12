@@ -14,12 +14,12 @@ repos:
     - id: pretty-format-json
       args: [--autofix]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.2.0'
+    rev: 'v0.2.1'
     hooks:
       - id: ruff
         args: ["--fix",]
   - repo: https://github.com/psf/black
-    rev: 24.1.1
+    rev: 24.2.0
     hooks:
     - id: black
       language_version: python3 # Should be a command that runs python3.6+
